@@ -5,6 +5,7 @@ use App\Controllers\Users;
 
 Route::prefix('user')->group(function () {
     Route::get('/test', [Users::class, 'testUser']);
+    Route::post('/login', [Users::class, 'login']);
     Route::post('/create', [Users::class, 'createUser']);
     Route::get('/user/{id}', [Users::class, 'getUser']);
     Route::put('/update/{id}', [Users::class, 'updateUser']);

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
 use App\BussinesLogic\Domain\CreateUser;
+use App\BussinesLogic\Domain\LoginUser;
 
 class Users extends Controller{
 
@@ -20,6 +21,10 @@ class Users extends Controller{
 
     public function createUser(Request $request){
         return CreateUser::execute($request->all());
+    }
+
+    public function login(Request $request){
+        return LoginUser::execute($request->all());
     }
 
     public function updateUser(int $id, Request $request){

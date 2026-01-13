@@ -27,6 +27,12 @@ class UserRepository
         return User::where('email', '=', $userDao->getEmail())->count() > 0;
     }
 
+    public function findOneBy(UserDao $userDao) : User|null {
+        // Logic to find a user by certain criteria
+        // This is a placeholder implementation
+        return User::where('email', '=', $userDao->getEmail())->first();
+    }
+
     public function findBy(UserDao $userDao) : User|null{
         // Logic to find a user by certain criteria
         // This is a placeholder implementation

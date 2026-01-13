@@ -5,6 +5,7 @@ namespace App\BussinesLogic\DAO;
 use App\BussinesLogic\ValueObject\ValueEmail;
 use App\BussinesLogic\ValueObject\ValueId;
 use App\BussinesLogic\ValueObject\ValueStringNotNull;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UserDao
 {
@@ -15,11 +16,18 @@ class UserDao
     private string $name;
     public function __construct(array $data)
     {
-        $this->id = ValueId::generate($data['id']);
-        $this->name = ValueStringNotNull::generate($data['name']);
-        $this->username = ValueStringNotNull::generate($data['username']);
-        $this->email = ValueEmail::generate($data['email']);
-        $this->password = ValueStringNotNull::generate($data['password']);
+        try{
+            $this->id = ValueId::generate(isset($data['id'])? $data['id'] : 0);
+            $this->name = isset($data['name']) ? ValueStringNotNull::generate($data['name']) : '';
+            $this->username = isset($data['username']) ? ValueStringNotNull::generate($data['username']) : '';
+            $this->email = ValueEmail::generate($data['email']);
+            $this->password = ValueStringNotNull::generate($data['password']);
+        }catch(HttpResponseException $e){
+            throw new HttpResponseException(response()->json([
+                'status' => 400,
+                'msg' => 'Dataset is invalid: ' . $e->getMessage()
+            ], 400));
+        }
     }
 
     public function getId(): int
