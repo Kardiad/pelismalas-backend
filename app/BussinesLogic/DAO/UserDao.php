@@ -20,8 +20,8 @@ class UserDao
             $this->id = ValueId::generate(isset($data['id'])? $data['id'] : 0);
             $this->name = isset($data['name']) ? ValueStringNotNull::generate($data['name']) : '';
             $this->username = isset($data['username']) ? ValueStringNotNull::generate($data['username']) : '';
-            $this->email = ValueEmail::generate($data['email']);
-            $this->password = ValueStringNotNull::generate($data['password']);
+            $this->email = isset($data['email']) ? ValueEmail::generate($data['email']) : '';
+            $this->password = isset($data['password']) ? ValueStringNotNull::generate($data['password']) : '';
         }catch(HttpResponseException $e){
             throw new HttpResponseException(response()->json([
                 'status' => 400,

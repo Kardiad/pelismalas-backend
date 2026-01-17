@@ -7,6 +7,9 @@ use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
 use App\BussinesLogic\Domain\CreateUser;
 use App\BussinesLogic\Domain\LoginUser;
+use App\BussinesLogic\Domain\DeleteUser;
+use App\BussinesLogic\Domain\FindUser;
+use App\BussinesLogic\Domain\UpdateUser;
 
 class Users extends Controller{
 
@@ -28,15 +31,15 @@ class Users extends Controller{
     }
 
     public function updateUser(int $id, Request $request){
-        
+        return UpdateUser::execute($id, $request->all());
     }
 
     public function deleteUser(int $id){
-        
+        return DeleteUser::execute($id);
     }
 
     public function getUser(int $id){
-
+        return FindUser::execute($id);
     }
 
 }

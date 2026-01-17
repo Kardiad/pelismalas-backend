@@ -21,25 +21,62 @@ class UserRepository
         return $user;
     }
 
-    public function exists(UserDao $userDao) : bool {
+    public function exists(UserDao $userDao): bool
+    {
         // Logic to check if a user exists
         // This is a placeholder implementation
         return User::where('email', '=', $userDao->getEmail())->count() > 0;
     }
 
-    public function findOneBy(UserDao $userDao) : User|null {
+    public function update(UserDao $userDao, User $user): User | null
+    {
+        $user->fill([
+            'username' => $userDao->getUsername() ? $userDao->getUsername(): $user->username,
+            'name' => $userDao->getName() ? $userDao->getName() : $user->name,
+            'email' => $userDao->getEmail() ? $userDao->getEmail(): $user->email,
+            'password' => $userDao->getPassword() ? $userDao->getPassword(): $user->password
+        ]);
+        if ($user->save()) {
+            return $user;
+        }
+        return null;
+    }
+
+    public function findById(UserDao $userDao): User|null
+    {
+        // Logic to find a user by ID
+        // This is a placeholder implementation
+        return User::find($userDao->getId());
+    }
+
+    public function delete(User $user)
+    {
+        // Logic to delete a user
+        // This is a placeholder implementation
+        return $user->delete();
+    }
+
+    public function findOneBy(UserDao $userDao): User|null
+    {
         // Logic to find a user by certain criteria
         // This is a placeholder implementation
         return User::where('email', '=', $userDao->getEmail())->first();
     }
 
-    public function findBy(UserDao $userDao) : User|null{
+    public function findBy(UserDao $userDao): User|null
+    {
         // Logic to find a user by certain criteria
         // This is a placeholder implementation
         return User::where([
-            'email', '=', $userDao->getEmail(),
-            'name', '=', $userDao->getName(),
-            'username', '=', $userDao->getUsername()
+            'email',
+            '=',
+            $userDao->getEmail(),
+            'name',
+            '=',
+            $userDao->getName(),
+            'username',
+            '=',
+            $userDao->getUsername()
         ])->first();
     }
 }
