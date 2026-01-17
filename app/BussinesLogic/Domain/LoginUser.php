@@ -20,7 +20,8 @@ class LoginUser
             return [
                 'status' => 200,
                 'msg' => 'Login successful',
-                'data' => $user
+                'data' => $user,
+                'token' => $user->createToken('auth_token', [], now()->addHours(24))->plainTextToken
             ];
         }
         return [

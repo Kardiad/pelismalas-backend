@@ -9,7 +9,9 @@ use App\BussinesLogic\Domain\CreateUser;
 use App\BussinesLogic\Domain\LoginUser;
 use App\BussinesLogic\Domain\DeleteUser;
 use App\BussinesLogic\Domain\FindUser;
+use App\BussinesLogic\Domain\LogOutUser;
 use App\BussinesLogic\Domain\UpdateUser;
+use Illuminate\Auth\Events\Logout;
 
 class Users extends Controller{
 
@@ -40,6 +42,14 @@ class Users extends Controller{
 
     public function getUser(int $id){
         return FindUser::execute($id);
+    }
+
+    public function logOutUser(Request $request){
+        $request->user()->currentAccessToken()->delete();
+        return [
+            'status' => 200,
+            'msg' => 'Logged out successfully'
+        ];
     }
 
 }
