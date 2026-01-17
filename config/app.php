@@ -123,4 +123,6 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'frontend_url' => env('APP_FRONTEND_URL'),
+    'user_middleware_enabled' => env('APP_USER_MIDDLEWARE_ENABLED', false),
 ];
